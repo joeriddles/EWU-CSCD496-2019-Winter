@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SecretSanta.Domain.Interfaces;
 
 namespace SecretSanta.Domain.Models
@@ -16,7 +17,7 @@ namespace SecretSanta.Domain.Models
 			IdCounter++;
 
 			Id = IdCounter;
-			Title = title;
+			Title = title ?? throw new ArgumentNullException();
 			UserGroups = new List<UserGroup>();
 		}
 

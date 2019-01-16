@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SecretSanta.Domain.Models;
 
 namespace SecretSanta.Domain.Tests.Models
@@ -6,6 +7,13 @@ namespace SecretSanta.Domain.Tests.Models
 	[TestClass]
 	public class MessageTests
 	{
+		[TestMethod]
+		[ExpectedException(typeof(ArgumentException))]
+		public void Message_CreateMessageWithInvalidId_ExpectException()
+		{
+			Message message = new Message("Hello there.", -1, -1);
+		}
+
 		[TestMethod]
 		public void CreateMessage()
 		{

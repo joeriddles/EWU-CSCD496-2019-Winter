@@ -8,7 +8,21 @@ namespace SecretSanta.Domain.Tests.Models
 	public class GiftTests
 	{
 		[TestMethod]
-		public void CreateGift()
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void Gift_CreateGiftWithNull_ExpectException()
+		{
+			Gift gift = new Gift(null, null);
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(ArgumentException))]
+		public void Gift_CreateGiftWithInvalidId_ExpectException()
+		{
+			Gift gift = new Gift("Car", "Vroom vroom!", -1);
+		}
+
+		[TestMethod]
+		public void Gift_CreateGift_Success()
 		{
 			Gift gift = new Gift(title: "Car", description: "Vroom vroom!", userId: 1, orderOfImportance:1, url: "http://www.car.com/");
 			Assert.AreEqual(1, gift.Id);

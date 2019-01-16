@@ -1,4 +1,5 @@
-﻿using SecretSanta.Domain.Interfaces;
+﻿using System;
+using SecretSanta.Domain.Interfaces;
 
 namespace SecretSanta.Domain.Models
 {
@@ -19,11 +20,21 @@ namespace SecretSanta.Domain.Models
 			IdCounter++;
 
 			Id = IdCounter;
-			Title = title;
-			Description = description;
-			UserId = userId;
-			OrderOfImportance = orderOfImportance;
-			Url = url;
+			Title = title ?? throw new ArgumentNullException();
+			Description = description ?? throw new ArgumentNullException();
+			UserId = userId > 0 ? userId : throw new ArgumentException();
+			OrderOfImportance = orderOfImportance > 0 ? orderOfImportance : throw new ArgumentException();
+			Url = url ?? throw new ArgumentNullException();
+		}
+
+		public override string ToString()
+		{
+			return $"{Id}: {Title} {Description}";
+		}
+
+		public static void ResetCounter()
+		{
+			IdCounter = 0;
 		}
 	}
 }

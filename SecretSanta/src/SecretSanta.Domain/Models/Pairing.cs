@@ -1,4 +1,5 @@
-﻿using SecretSanta.Domain.Interfaces;
+﻿using System;
+using SecretSanta.Domain.Interfaces;
 
 namespace SecretSanta.Domain.Models
 {
@@ -16,9 +17,19 @@ namespace SecretSanta.Domain.Models
 			IdCounter++;
 
 			Id = IdCounter;
-			RecipientId = recipientId;
-			SantaId = santaId;
-			GroupId = groupId;
+			RecipientId = recipientId > 0 ? recipientId : throw new ArgumentException();
+			SantaId = santaId > 0 ? santaId : throw new ArgumentException();
+			GroupId = groupId > 0 ? groupId : throw new ArgumentException();
+		}
+
+		public override string ToString()
+		{
+			return $"{Id}: Recipient: {RecipientId}, Santa: {SantaId}";
+		}
+
+		public static void ResetCounter()
+		{
+			IdCounter = 0;
 		}
 	}
 }
