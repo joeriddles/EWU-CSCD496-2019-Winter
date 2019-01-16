@@ -32,5 +32,11 @@ namespace SecretSanta.Domain.Tests.Models
 			Assert.AreEqual(1, gift.OrderOfImportance);
 			Assert.AreEqual("http://www.car.com/", gift.Url);
 		}
+
+		[TestCleanup]
+		public void ResetGroupIdCounter()
+		{
+			Gift.ResetCounter();
+		}
 	}
 }

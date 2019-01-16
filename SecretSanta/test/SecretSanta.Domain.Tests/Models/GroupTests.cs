@@ -22,5 +22,11 @@ namespace SecretSanta.Domain.Tests.Models
 			Assert.AreEqual(".NET usergroup", group.Title);
 			Assert.IsNotNull(group.UserGroups);
 		}
+
+		[TestCleanup]
+		public void ResetGroupIdCounter()
+		{
+			Group.ResetCounter();
+		}
 	}
 }
