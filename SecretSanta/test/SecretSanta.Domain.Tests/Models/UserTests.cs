@@ -16,6 +16,12 @@ namespace SecretSanta.Domain.Tests.Models
 			Assert.IsNotNull(user.UserGroups);
 			Assert.IsNotNull(user.Gifts);
 		}
+
+		[TestCleanup]
+		public void ResetGroupIdCounter()
+		{
+			User.ResetCounter();
+		}
 	}
 }
  

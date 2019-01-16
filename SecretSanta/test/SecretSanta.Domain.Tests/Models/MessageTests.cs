@@ -22,5 +22,11 @@ namespace SecretSanta.Domain.Tests.Models
 			Assert.AreEqual(1, message.RecipientId);
 			Assert.AreEqual(2, message.SantaId);
 		}
+
+		[TestCleanup]
+		public void ResetGroupIdCounter()
+		{
+			Message.ResetCounter();
+		}
 	}
 }

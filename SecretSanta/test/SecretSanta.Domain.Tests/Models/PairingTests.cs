@@ -14,5 +14,11 @@ namespace SecretSanta.Domain.Tests.Models
 			Assert.AreEqual(2, pairing.SantaId);
 			Assert.AreEqual(3, pairing.GroupId);
 		}
+
+		[TestCleanup]
+		public void ResetGroupIdCounter()
+		{
+			Pairing.ResetCounter();
+		}
 	}
 }
