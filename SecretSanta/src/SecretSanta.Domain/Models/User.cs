@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using SecretSanta.Domain.Interfaces;
 
@@ -21,8 +22,8 @@ namespace SecretSanta.Domain.Models
 			IdCounter++;
 
 			Id = IdCounter;
-			FirstName = firstName;
-			LastName = lastName;
+			FirstName = firstName ?? throw new ArgumentNullException();
+			LastName = lastName ?? throw new ArgumentNullException();
 			Gifts = new List<Gift>();
 			UserGroups = new List<UserGroup>();
 		}
