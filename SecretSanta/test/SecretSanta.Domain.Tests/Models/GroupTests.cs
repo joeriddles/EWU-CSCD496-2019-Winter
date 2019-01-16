@@ -1,0 +1,18 @@
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SecretSanta.Domain.Models;
+
+namespace SecretSanta.Domain.Tests.Models
+{
+	[TestClass]
+	public class GroupTests
+	{
+		[TestMethod]
+		public void CreateGroup()
+		{
+			Group group = new Group(".NET usergroup");
+			Assert.AreEqual(1, group.Id);
+			Assert.AreEqual(".NET usergroup", group.Title);
+			Assert.IsNotNull(group.UserGroups);
+		}
+	}
+}

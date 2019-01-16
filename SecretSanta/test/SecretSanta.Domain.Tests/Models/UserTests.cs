@@ -9,9 +9,13 @@ namespace SecretSanta.Domain.Tests.Models
 		[TestMethod]
 		public void CreateUser()
 		{
-			User user = new User { FirstName = "Inigo", LastName = "Montoya" };
+			User user = new User("Inigo", "Montoya");
+			Assert.AreEqual(1, user.Id);
 			Assert.AreEqual("Inigo", user.FirstName);
 			Assert.AreEqual("Montoya", user.LastName);
+			Assert.IsNotNull(user.UserGroups);
+			Assert.IsNotNull(user.Gifts);
 		}
 	}
 }
+ 
