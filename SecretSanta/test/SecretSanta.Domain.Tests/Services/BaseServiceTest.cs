@@ -7,7 +7,7 @@ using SecretSanta.Domain.Services;
 namespace SecretSanta.Domain.Tests.Services
 {
 	[TestClass]
-	public abstract class BaseTest
+	public abstract class BaseServiceTest
 	{
 		[TestInitialize]
 		public void OpenConnection()

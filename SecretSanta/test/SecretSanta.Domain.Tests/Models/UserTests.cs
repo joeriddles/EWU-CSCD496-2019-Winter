@@ -5,7 +5,7 @@ using SecretSanta.Domain.Models;
 namespace SecretSanta.Domain.Tests.Models
 {
 	[TestClass]
-	public class UserTests
+	public class UserTests : BaseModelTest
 	{
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentNullException))]
@@ -22,12 +22,6 @@ namespace SecretSanta.Domain.Tests.Models
 			Assert.AreEqual("Montoya", user.LastName);
 			Assert.IsNotNull(user.UserGroups);
 			Assert.IsNotNull(user.Gifts);
-		}
-
-		[TestCleanup]
-		public void ResetGroupIdCounter()
-		{
-			User.ResetCounter();
 		}
 	}
 }

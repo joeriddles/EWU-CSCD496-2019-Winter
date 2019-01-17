@@ -5,7 +5,7 @@ using SecretSanta.Domain.Models;
 namespace SecretSanta.Domain.Tests.Models
 {
 	[TestClass]
-	public class GiftTests
+	public class GiftTests : BaseModelTest
 	{
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentNullException))]
@@ -31,12 +31,6 @@ namespace SecretSanta.Domain.Tests.Models
 			Assert.AreEqual(1, gift.UserId);
 			Assert.AreEqual(1, gift.OrderOfImportance);
 			Assert.AreEqual("http://www.car.com/", gift.Url);
-		}
-
-		[TestCleanup]
-		public void ResetGroupIdCounter()
-		{
-			Gift.ResetCounter();
 		}
 	}
 }

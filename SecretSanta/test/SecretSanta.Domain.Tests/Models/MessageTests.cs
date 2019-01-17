@@ -5,7 +5,7 @@ using SecretSanta.Domain.Models;
 namespace SecretSanta.Domain.Tests.Models
 {
 	[TestClass]
-	public class MessageTests
+	public class MessageTests : BaseModelTest
 	{
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentException))]
@@ -21,12 +21,6 @@ namespace SecretSanta.Domain.Tests.Models
 			Assert.AreEqual("Who goes there?", message.Content);
 			Assert.AreEqual(1, message.RecipientId);
 			Assert.AreEqual(2, message.SantaId);
-		}
-
-		[TestCleanup]
-		public void ResetGroupIdCounter()
-		{
-			Message.ResetCounter();
 		}
 	}
 }

@@ -7,7 +7,7 @@ using SecretSanta.Domain.Services;
 namespace SecretSanta.Domain.Tests.Services
 {
 	[TestClass]
-	public class GroupServiceTests : BaseTest
+	public class GroupServiceServiceTests : BaseServiceTest
 	{
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentNullException))]
