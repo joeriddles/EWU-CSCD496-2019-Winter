@@ -11,6 +11,8 @@ namespace SecretSanta.Domain
 		public DbSet<Pairing> Pairings { get; set; }
 		public DbSet<Message> Messages { get; set; }
 
+		public DbSet<UserGroup> UserGroups { get; set; }
+
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
