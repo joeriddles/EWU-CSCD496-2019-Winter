@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using SecretSanta.Domain.Interfaces;
 
 namespace SecretSanta.Domain.Models
 {
-	public class User : IEntity
+	public class User : Counter, IEntity
 	{
-		private static int IdCounter { get; set; }
-
-
-		public int Id { get; set; }
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
 		public List<Gift> Gifts { get; set; }
@@ -18,9 +13,6 @@ namespace SecretSanta.Domain.Models
 
 		public User(string firstName, string lastName)
 		{
-			IdCounter++;
-
-			Id = IdCounter;
 			FirstName = firstName ?? throw new ArgumentNullException(nameof(firstName));
 			LastName = lastName ?? throw new ArgumentNullException(nameof(lastName));
 			Gifts = new List<Gift>();
@@ -30,11 +22,6 @@ namespace SecretSanta.Domain.Models
 		public override string ToString()
 		{
 			return $"{Id}: {FirstName} {LastName}";
-		}
-
-		public static void ResetCounter()
-		{
-			IdCounter = 0;
 		}
 	}
 }

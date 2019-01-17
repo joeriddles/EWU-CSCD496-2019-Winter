@@ -3,11 +3,8 @@ using SecretSanta.Domain.Interfaces;
 
 namespace SecretSanta.Domain.Models
 {
-	public class Gift : IEntity
+	public class Gift : Counter, IEntity
 	{
-		private static int IdCounter { get; set; }
-
-		public int Id { get; set; }
 		public string Title { get; set; }
 		public string Description { get; set; }
 		public int UserId { get; set; }
@@ -17,9 +14,6 @@ namespace SecretSanta.Domain.Models
 		public Gift(string title, string description = "", int userId = 0, int orderOfImportance = 0,
 			string url = "")
 		{
-			IdCounter++;
-
-			Id = IdCounter;
 			Title = title ?? throw new ArgumentNullException(nameof(title));
 			Description = description ?? throw new ArgumentNullException(nameof(description));
 			UserId = userId > -1 ? userId : throw new ArgumentException(nameof(userId));
@@ -30,11 +24,6 @@ namespace SecretSanta.Domain.Models
 		public override string ToString()
 		{
 			return $"{Id}: {Title} {Description}";
-		}
-
-		public static void ResetCounter()
-		{
-			IdCounter = 0;
 		}
 	}
 }
