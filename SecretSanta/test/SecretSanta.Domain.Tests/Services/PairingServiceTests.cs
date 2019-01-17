@@ -7,7 +7,7 @@ using SecretSanta.Domain.Services;
 namespace SecretSanta.Domain.Tests.Services
 {
 	[TestClass]
-	public class PairingServiceServiceTests : BaseServiceTest
+	public class PairingServiceTests : BaseServiceTest
 	{
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentNullException))]
@@ -95,7 +95,7 @@ namespace SecretSanta.Domain.Tests.Services
 			using (var context = new ApplicationDbContext(Options))
 			{
 				PairingService pairingService = new PairingService(context);
-				pairing.GroupId = 1;
+				pairing.GroupId = group.Id;
 				pairingService.UpdatePairing(pairing);
 			}
 
