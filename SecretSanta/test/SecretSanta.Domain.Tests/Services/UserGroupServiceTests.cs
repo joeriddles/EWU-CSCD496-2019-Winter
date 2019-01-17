@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SecretSanta.Domain.Models;
 using SecretSanta.Domain.Services;
@@ -125,6 +127,44 @@ namespace SecretSanta.Domain.Tests.Services
 				Assert.AreEqual(secondUser.Id, allUserGroups[1].UserId);
 				Assert.AreEqual(_group.Id, allUserGroups[0].GroupId);
 				Assert.AreEqual(secondGroup.Id, allUserGroups[1].GroupId);
+			}
+		}
+
+		[TestMethod]
+		public void UserGroup_EagerlyVsNotEagerlyLoad()
+		{
+			User user = new User("Inigo", "Montoya");
+			Group group = new Group(".NET User group");
+			UserGroup userGroup = new UserGroup(user, group);
+
+			using (var context = new ApplicationDbContext(Options))
+			{
+				UserService userService = new UserService(context);
+				userService.AddUser(user);
+
+				GroupService groupService = new GroupService(context);
+				groupService.AddGroup(group);
+
+				UserGroupService userGroupService = new UserGroupService(context);
+				userGroupService.AddUserGroup(userGroup);
+			}
+
+			using (var context = new ApplicationDbContext(Options))
+			{
+				List<UserGroup> fullUserGroups = context.UserGroups
+					.ToList();
+				Assert.IsNull(fullUserGroups.Single().User);
+				Assert.IsNull(fullUserGroups.Single().Group);
+			}
+
+			using (var context = new ApplicationDbContext(Options))
+			{
+				List<UserGroup> fullUserGroups = context.UserGroups
+					.Include(ug => ug.User)
+					.Include(ug => ug.Group)
+					.ToList();
+				Assert.IsNotNull(fullUserGroups.Single().User);
+				Assert.IsNotNull(fullUserGroups.Single().Group);
 			}
 		}
 
