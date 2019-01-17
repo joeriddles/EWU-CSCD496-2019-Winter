@@ -32,6 +32,12 @@ namespace SecretSanta.Domain.Tests.Services
 			{
 				UserService userService = new UserService(context);
 				userService.DeleteAllUsers();
+
+				GroupService groupService = new GroupService(context);
+				groupService.DeleteAllGroups();
+
+				UserGroupService userGroupService = new UserGroupService(context);
+				userGroupService.DeleteAllUserGroups();
 			}
 
 			SqliteConnection.Close();
