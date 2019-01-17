@@ -17,9 +17,9 @@ namespace SecretSanta.Domain.Models
 			IdCounter++;
 
 			Id = IdCounter;
-			RecipientId = recipientId > -1 ? recipientId : throw new ArgumentException();
-			SantaId = santaId > -1 ? santaId : throw new ArgumentException();
-			GroupId = groupId > -1 ? groupId : throw new ArgumentException();
+			RecipientId = recipientId > -1 ? recipientId : throw new ArgumentException(nameof(recipientId));
+			SantaId = santaId > -1 ? santaId : throw new ArgumentException(nameof(santaId));
+			GroupId = groupId > -1 ? groupId : throw new ArgumentException(nameof(groupId));
 		}
 
 		public override string ToString()

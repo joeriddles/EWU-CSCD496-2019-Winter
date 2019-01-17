@@ -17,7 +17,7 @@ namespace SecretSanta.Domain.Models
 			IdCounter++;
 
 			Id = IdCounter;
-			Title = title ?? throw new ArgumentNullException();
+			Title = title ?? throw new ArgumentNullException(nameof(title));
 			UserGroups = new List<UserGroup>();
 		}
 
