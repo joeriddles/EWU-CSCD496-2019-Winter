@@ -12,11 +12,8 @@ namespace SecretSanta.Domain.Models
 
 		public UserGroup(User user, Group group)
 		{
-			if (user is null || group is null)
-				throw new ArgumentNullException();
-
-			User = user;
-			Group = group;
+			User = user ?? throw new ArgumentNullException();
+			Group = group ?? throw new ArgumentNullException();
 		}
 
 		public UserGroup() { }
