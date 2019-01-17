@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SecretSanta.Domain.Models;
 
 namespace SecretSanta.Domain.Tests.Models
@@ -7,7 +8,14 @@ namespace SecretSanta.Domain.Tests.Models
 	public class PairingTests
 	{
 		[TestMethod]
-		public void CreatePairing()
+		[ExpectedException(typeof(ArgumentException))]
+		public void Pairing_CreatePairingWithInvalidId_ExpectException()
+		{
+			Pairing pairing = new Pairing(recipientId: -1, santaId: -1);
+		}
+
+		[TestMethod]
+		public void Pairing_CreatePairing_Success()
 		{
 			Pairing pairing = new Pairing(recipientId: 1, santaId:2, groupId:3);
 			Assert.AreEqual(1, pairing.RecipientId);

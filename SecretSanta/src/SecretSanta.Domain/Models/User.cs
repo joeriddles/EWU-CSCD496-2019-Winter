@@ -9,12 +9,11 @@ namespace SecretSanta.Domain.Models
 	{
 		private static int IdCounter { get; set; }
 
+
 		public int Id { get; set; }
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
-		[NotMapped]
 		public List<Gift> Gifts { get; set; }
-		[NotMapped]
 		public List<UserGroup> UserGroups { get; set; }
 
 		public User(string firstName, string lastName)

@@ -71,7 +71,7 @@ namespace SecretSanta.Domain.Tests.Services
 			using (var context = new ApplicationDbContext(Options))
 			{
 				GroupService groupService = new GroupService(context);
-				Group fetchedGroup = groupService.GetGroupById(1);
+				Group fetchedGroup = groupService.GetGroupById(group.Id);
 
 				Assert.AreEqual(group.Id, fetchedGroup.Id);
 				Assert.AreEqual(group.Title, fetchedGroup.Title);
@@ -126,10 +126,13 @@ namespace SecretSanta.Domain.Tests.Services
 			}
 		}
 
-		[TestCleanup]
-		public void ResetGroupIdCounter()
+		public void Cleanup()
 		{
-			Group.ResetCounter();
+			using (var context = new ApplicationDbContext(Options))
+			{
+				GroupService groupService = new GroupService(context);
+				groupService.DeleteAllGroups();
+			}
 		}
 	}
 }

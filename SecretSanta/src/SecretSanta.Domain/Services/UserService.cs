@@ -37,6 +37,25 @@ namespace SecretSanta.Domain.Services
 			DbContext.SaveChanges();
 		}
 
+		public User DeleteUser(int userId)
+		{
+			User user = DbContext.Users.Find(userId);
+
+			if (user is null)
+				return null;
+
+			DbContext.Users.Remove(user);
+			DbContext.SaveChanges();
+			return user;
+		}
+
+		public void DeleteAllUsers()
+		{
+			List<User> allUsers = GetAllUsers();
+			allUsers.ForEach(user => DeleteUser(user.Id));
+			DbContext.SaveChanges();
+		}
+
 		public int GetUserCount()
 		{
 			return DbContext.Users.Count();

@@ -22,8 +22,8 @@ namespace SecretSanta.Domain.Models
 			Id = IdCounter;
 			Title = title ?? throw new ArgumentNullException();
 			Description = description ?? throw new ArgumentNullException();
-			UserId = userId > 0 ? userId : throw new ArgumentException();
-			OrderOfImportance = orderOfImportance > 0 ? orderOfImportance : throw new ArgumentException();
+			UserId = userId > -1 ? userId : throw new ArgumentException();
+			OrderOfImportance = orderOfImportance > -1 ? orderOfImportance : throw new ArgumentException();
 			Url = url ?? throw new ArgumentNullException();
 		}
 

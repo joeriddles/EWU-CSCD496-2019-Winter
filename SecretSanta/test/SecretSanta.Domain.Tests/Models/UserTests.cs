@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SecretSanta.Domain.Models;
 
 namespace SecretSanta.Domain.Tests.Models
@@ -7,10 +8,16 @@ namespace SecretSanta.Domain.Tests.Models
 	public class UserTests
 	{
 		[TestMethod]
-		public void CreateUser()
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void User_CreateUserWithNull_ExpectException()
+		{
+			User user = new User(null, null);
+		}
+
+		[TestMethod]
+		public void User_CreateUser_Success()
 		{
 			User user = new User("Inigo", "Montoya");
-			Assert.AreEqual(1, user.Id);
 			Assert.AreEqual("Inigo", user.FirstName);
 			Assert.AreEqual("Montoya", user.LastName);
 			Assert.IsNotNull(user.UserGroups);

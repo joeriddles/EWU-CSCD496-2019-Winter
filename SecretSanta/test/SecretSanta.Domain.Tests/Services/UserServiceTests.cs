@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SecretSanta.Domain.Models;
 using SecretSanta.Domain.Services;
@@ -72,7 +73,7 @@ namespace SecretSanta.Domain.Tests.Services
 			using (var context = new ApplicationDbContext(Options))
 			{
 				UserService userService = new UserService(context);
-				User fetchedUser = userService.GetUserById(1);
+				User fetchedUser = userService.GetUserById(user.Id);
 
 				Assert.AreEqual(user.Id, fetchedUser.Id);
 				Assert.AreEqual(user.FirstName, fetchedUser.FirstName);
@@ -128,10 +129,28 @@ namespace SecretSanta.Domain.Tests.Services
 			}
 		}
 
-		[TestCleanup]
-		public void ResetUserIdCounter()
+		[TestMethod]
+		public void UserService_DeleteUser_Success()
 		{
-			User.ResetCounter();
+			User user = new User("Inigo", "Montoya");
+			using (var context = new ApplicationDbContext(Options))
+			{
+				UserService userService = new UserService(context);
+				userService.AddUser(user);
+			}
+
+			using (var context = new ApplicationDbContext(Options))
+			{
+				UserService userService = new UserService(context);
+				User deletedUser = userService.DeleteUser(user.Id);
+				Assert.AreEqual("Inigo", deletedUser.FirstName);
+			}
+
+			using (var context = new ApplicationDbContext(Options))
+			{
+				UserService userService = new UserService(context);
+				Assert.AreEqual(0, userService.GetUserCount());
+			}
 		}
 	}
 }
