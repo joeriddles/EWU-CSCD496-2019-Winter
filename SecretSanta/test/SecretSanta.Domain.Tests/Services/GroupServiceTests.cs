@@ -7,7 +7,7 @@ using SecretSanta.Domain.Services;
 namespace SecretSanta.Domain.Tests.Services
 {
 	[TestClass]
-	public class GroupServiceServiceTests : BaseServiceTest
+	public class GroupServiceTests : BaseServiceTest
 	{
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentNullException))]
@@ -123,15 +123,6 @@ namespace SecretSanta.Domain.Tests.Services
 				Assert.AreEqual(2, allGroups.Count);
 				Assert.AreEqual(".NET User group", allGroups[0].Title);
 				Assert.AreEqual("Java User group", allGroups[1].Title);
-			}
-		}
-
-		public void Cleanup()
-		{
-			using (var context = new ApplicationDbContext(Options))
-			{
-				GroupService groupService = new GroupService(context);
-				groupService.DeleteAllGroups();
 			}
 		}
 	}

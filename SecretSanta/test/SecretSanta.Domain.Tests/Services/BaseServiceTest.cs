@@ -28,18 +28,6 @@ namespace SecretSanta.Domain.Tests.Services
 		[TestCleanup]
 		public void CloseConnection()
 		{
-			using (var context = new ApplicationDbContext(Options))
-			{
-				UserService userService = new UserService(context);
-				userService.DeleteAllUsers();
-
-				GroupService groupService = new GroupService(context);
-				groupService.DeleteAllGroups();
-
-				UserGroupService userGroupService = new UserGroupService(context);
-				userGroupService.DeleteAllUserGroups();
-			}
-
 			SqliteConnection.Close();
 
 			User.ResetCounter();

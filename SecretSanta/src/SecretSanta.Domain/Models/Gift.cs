@@ -20,11 +20,11 @@ namespace SecretSanta.Domain.Models
 			IdCounter++;
 
 			Id = IdCounter;
-			Title = title ?? throw new ArgumentNullException();
-			Description = description ?? throw new ArgumentNullException();
-			UserId = userId > -1 ? userId : throw new ArgumentException();
-			OrderOfImportance = orderOfImportance > -1 ? orderOfImportance : throw new ArgumentException();
-			Url = url ?? throw new ArgumentNullException();
+			Title = title ?? throw new ArgumentNullException(nameof(title));
+			Description = description ?? throw new ArgumentNullException(nameof(description));
+			UserId = userId > -1 ? userId : throw new ArgumentException(nameof(userId));
+			OrderOfImportance = orderOfImportance > -1 ? orderOfImportance : throw new ArgumentException(nameof(orderOfImportance));
+			Url = url ?? throw new ArgumentNullException(nameof(url));
 		}
 
 		public override string ToString()

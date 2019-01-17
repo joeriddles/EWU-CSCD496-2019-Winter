@@ -12,10 +12,11 @@ namespace SecretSanta.Domain.Models
 
 		public UserGroup(User user, Group group)
 		{
-			User = user ?? throw new ArgumentNullException();
-			Group = group ?? throw new ArgumentNullException();
+			User = user ?? throw new ArgumentNullException(nameof(user));
+			Group = group ?? throw new ArgumentNullException(nameof(group));
 		}
 
+		// Default constructor needed by Entity Framework
 		public UserGroup() { }
 	}
 }

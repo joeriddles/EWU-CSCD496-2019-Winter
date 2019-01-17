@@ -21,8 +21,8 @@ namespace SecretSanta.Domain.Models
 			IdCounter++;
 
 			Id = IdCounter;
-			FirstName = firstName ?? throw new ArgumentNullException();
-			LastName = lastName ?? throw new ArgumentNullException();
+			FirstName = firstName ?? throw new ArgumentNullException(nameof(firstName));
+			LastName = lastName ?? throw new ArgumentNullException(nameof(lastName));
 			Gifts = new List<Gift>();
 			UserGroups = new List<UserGroup>();
 		}
