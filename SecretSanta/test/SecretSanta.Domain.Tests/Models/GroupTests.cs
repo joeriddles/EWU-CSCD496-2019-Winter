@@ -5,7 +5,7 @@ using SecretSanta.Domain.Models;
 namespace SecretSanta.Domain.Tests.Models
 {
 	[TestClass]
-	public class GroupTests
+	public class GroupTests : BaseModelTest
 	{
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentNullException))]
@@ -20,12 +20,6 @@ namespace SecretSanta.Domain.Tests.Models
 			Group group = new Group(".NET usergroup");
 			Assert.AreEqual(".NET usergroup", group.Title);
 			Assert.IsNotNull(group.UserGroups);
-		}
-
-		[TestCleanup]
-		public void ResetGroupIdCounter()
-		{
-			Group.ResetCounter();
 		}
 	}
 }

@@ -5,7 +5,7 @@ using SecretSanta.Domain.Models;
 namespace SecretSanta.Domain.Tests.Models
 {
 	[TestClass]
-	public class UserGroupTests
+	public class UserGroupTests : BaseModelTest
 	{
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentNullException))]
