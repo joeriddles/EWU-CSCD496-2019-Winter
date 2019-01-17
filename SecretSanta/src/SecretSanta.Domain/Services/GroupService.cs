@@ -37,6 +37,25 @@ namespace SecretSanta.Domain.Services
 			DbContext.SaveChanges();
 		}
 
+		public Group DeleteGroup(int groupId)
+		{
+			Group group = DbContext.Groups.Find(groupId);
+
+			if (group is null)
+				return null;
+
+			DbContext.Groups.Remove(group);
+			DbContext.SaveChanges();
+			return group;
+		}
+
+		public void DeleteAllGroups()
+		{
+			List<Group> allGroups = GetAllGroups();
+			allGroups.ForEach(group => DeleteGroup(group.Id));
+			DbContext.SaveChanges();
+		}
+
 		public int GetGroupCount()
 		{
 			return DbContext.Groups.Count();

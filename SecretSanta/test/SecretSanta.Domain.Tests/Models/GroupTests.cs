@@ -18,7 +18,6 @@ namespace SecretSanta.Domain.Tests.Models
 		public void CreateGroup()
 		{
 			Group group = new Group(".NET usergroup");
-			Assert.AreEqual(1, group.Id);
 			Assert.AreEqual(".NET usergroup", group.Title);
 			Assert.IsNotNull(group.UserGroups);
 		}

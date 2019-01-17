@@ -18,8 +18,8 @@ namespace SecretSanta.Domain.Models
 
 			Id = IdCounter;
 			Content = content ?? throw new ArgumentNullException();
-			RecipientId = recipientId > 0 ? recipientId : throw new ArgumentException();
-			SantaId = santaId > 0 ? santaId : throw new ArgumentException();
+			RecipientId = recipientId > -1 ? recipientId : throw new ArgumentException();
+			SantaId = santaId > -1 ? santaId : throw new ArgumentException();
 		}
 
 		public override string ToString()
