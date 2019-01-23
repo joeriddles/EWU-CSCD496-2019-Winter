@@ -28,10 +28,8 @@ namespace SecretSanta.Import.Tests
 		{
 			if (File.Exists("__temp.txt"))
 				File.Delete("__temp.txt");
-
-			Assert.IsFalse(File.Exists("__temp.txt"));
-			Assert.IsFalse(File.Exists("__temp2.txt"));
-			Assert.IsFalse(File.Exists("__empty.txt"));
+			if (File.Exists("__temp2.txt"))
+				File.Delete("__temp2.txt");
 		}
 
 		[TestInitialize]
