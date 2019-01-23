@@ -160,5 +160,18 @@ namespace SecretSanta.Import.Tests
 			Assert.AreEqual("Xbox", gifts[1].Title);
 			Assert.AreEqual(user.Id, gifts[0].UserId);
 		}
+
+		[TestMethod]
+		public void ReadBody_HasGiftsAndBlankLines_Success()
+		{
+			File.WriteAllLines("__temp.txt", new []{"Name: John Smith", "", "Racecar", "", "Xbox", ""});
+			Import import = new Import("__temp.txt");
+			User user = import.ReadHeader();
+			List<Gift> gifts = import.ReadBody(user);
+			Assert.AreEqual(2, gifts.Count);
+			Assert.AreEqual("Racecar", gifts[0].Title);
+			Assert.AreEqual("Xbox", gifts[1].Title);
+			Assert.AreEqual(user.Id, gifts[0].UserId);
+		}
 	}
 }
