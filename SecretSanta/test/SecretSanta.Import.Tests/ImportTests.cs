@@ -35,45 +35,45 @@ namespace SecretSanta.Import.Tests
 		[TestInitialize]
 		public void TestInitialize()
 		{
-			if (File.Exists("__empty.txt"))
-				File.Delete("__empty.txt");
+			if (File.Exists("__temp3.txt"))
+				File.Delete("__temp3.txt");
 		}
 
 		[TestCleanup]
 		public void TestCleanup()
 		{
-			if (File.Exists("__empty.txt"))
-				File.Delete("__empty.txt");
+			if (File.Exists("__temp3.txt"))
+				File.Delete("__temp3.txt");
 		}
 
 		[TestMethod]
 		public void InitializeAndCleanupAreWorking()
 		{
-			Assert.IsFalse(File.Exists("__empty.txt"));
+			Assert.IsFalse(File.Exists("__temp3.txt"));
 			Assert.IsTrue(File.Exists("__temp.txt"));
 			Assert.IsTrue(File.Exists("__temp2.txt"));
 		}
 
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentNullException))]
-		public void Import_filenameIsNull_ThrowsException()
+		public void Import_filenameIsNull_ThrowsArgumentNullException()
 		{
 			Import import = new Import(null);
 		}
 
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentException))]
-		public void Import_fileDoesNotExist_ThrowsException()
+		public void Import_fileDoesNotExist_ThrowsArgumentException()
 		{
 			Import import = new Import("__thisfiledontexist.fake");
 		}
 
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentException))]
-		public void Import_fileIsEmpty_ThrowsException()
+		public void Import_fileIsEmpty_ThrowsArgumentException()
 		{
-			File.WriteAllLines("__empty.txt", new List<string>());
-			Import import = new Import("__empty.txt");
+			File.WriteAllLines("__temp3.txt", new List<string>());
+			Import import = new Import("__temp3.txt");
 		}
 
 		[TestMethod]
@@ -85,28 +85,28 @@ namespace SecretSanta.Import.Tests
 
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentException))]
-		public void ReadHead_FormattedIncorrectly_ThrowsException()
+		public void ReadHead_FormattedIncorrectly_ThrowsArgumentException()
 		{
-			File.WriteAllLines("__empty.txt", new List<string>(){"No names here"});
-			Import import = new Import("__empty.txt");
+			File.WriteAllLines("__temp3.txt", new List<string>(){"No names here"});
+			Import import = new Import("__temp3.txt");
 			import.ReadHeader();
 		}
 
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentException))]
-		public void ReadHead_NameFormattedIncorrectly_ThrowsException()
+		public void ReadHead_NameFormattedIncorrectly_ThrowsArgumentException()
 		{
-			File.WriteAllLines("__empty.txt", new List<string>() { "NotName: John Smith" });
-			Import import = new Import("__empty.txt");
+			File.WriteAllLines("__temp3.txt", new List<string>() { "NotName: John Smith" });
+			Import import = new Import("__temp3.txt");
 			import.ReadHeader();
 		}
 
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentException))]
-		public void ReadHead_NameIsEmpty_ThrowsExcption()
+		public void ReadHead_NameIsEmpty_ThrowsArgumentException()
 		{
-			File.WriteAllLines("__empty.txt", new List<string>() { "NotName: " });
-			Import import = new Import("__empty.txt");
+			File.WriteAllLines("__temp3.txt", new List<string>() { "NotName: " });
+			Import import = new Import("__temp3.txt");
 			import.ReadHeader();
 		}
 
@@ -129,6 +129,20 @@ namespace SecretSanta.Import.Tests
 		}
 
 		[TestMethod]
+		[DataRow("Name:   John Smith")]
+		[DataRow("Name: John   Smith")]
+		[DataRow("Name: John Smith   ")]
+		[DataRow("Name:   John   Smith   ")]
+		public void ReadHead_Spaces_FirstName_LastName_Success(string fileHeader)
+		{
+			File.WriteAllLines("__temp3.txt", new List<string>() { fileHeader });
+			Import import = new Import("__temp3.txt");
+			User user = import.ReadHeader();
+			Assert.AreEqual("John", user.FirstName);
+			Assert.AreEqual("Smith", user.LastName);
+		}
+
+		[TestMethod]
 		[ExpectedException(typeof(ArgumentNullException))]
 		public void ReadBody_NullUser_ThrowsException()
 		{
@@ -139,8 +153,8 @@ namespace SecretSanta.Import.Tests
 		[TestMethod]
 		public void ReadBody_NoGifts_EmptyList()
 		{
-			File.WriteAllLines("__empty.txt", new List<string>() { "Name: John Smith" });
-			Import import = new Import("__empty.txt");
+			File.WriteAllLines("__temp3.txt", new List<string>() { "Name: John Smith" });
+			Import import = new Import("__temp3.txt");
 			User user = import.ReadHeader();
 			List<Gift> gifts = import.ReadBody(user);
 			Assert.IsNotNull(gifts);
