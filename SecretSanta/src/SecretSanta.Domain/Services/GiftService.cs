@@ -5,7 +5,7 @@ using SecretSanta.Domain.Models;
 
 namespace SecretSanta.Domain.Services
 {
-    public class GiftService
+    public class GiftService : IGiftService
     {
         private ApplicationDbContext DbContext { get; }
 
