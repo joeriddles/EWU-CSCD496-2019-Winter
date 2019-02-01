@@ -14,40 +14,43 @@ namespace SecretSanta.Domain.Services
 			DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
 		}
 
-		public Group AddGroup(Group @group)
+		public Group GetGroup(int groupId)
 		{
-			DbContext.Groups.Add(@group);
-			DbContext.SaveChanges();
-			return @group;
+			return DbContext.Groups.Find(groupId);
 		}
 
-		public Group UpdateGroup(Group @group)
+		public Group AddGroup(Group group)
 		{
-			DbContext.Groups.Update(@group);
+			DbContext.Groups.Add(group);
 			DbContext.SaveChanges();
-			return @group;
+			return group;
 		}
 
+		public Group UpdateGroup(Group group)
+		{
+			DbContext.Groups.Update(group);
+			DbContext.SaveChanges();
+			return group;
+		}
 
-        public Group UpdateGroup(Group @group)
-        {
-            DbContext.Groups.Update(@group);
-            DbContext.SaveChanges();
-            return @group;
-        }
+		public void RemoveGroup(Group group)
+		{
+			DbContext.Groups.Remove(group);
+			DbContext.SaveChanges();
+		}
 
-        public List<Group> FetchAll()
-        {
-            return DbContext.Groups.ToList();
-        }
+		public List<Group> GetAllGroups()
+		{
+			return DbContext.Groups.ToList();
+		}
 
-        public List<User> GetUsers(int groupId)
-        {
-            return DbContext.Groups
-                .Where(x => x.Id == groupId)
-                .SelectMany(x => x.GroupUsers)
-                .Select(x => x.User)
-                .ToList();
-        }
-    }
+		public List<User> GetUsers(int groupId)
+		{
+			return DbContext.Groups
+				.Where(x => x.Id == groupId)
+				.SelectMany(x => x.GroupUsers)
+				.Select(x => x.User)
+				.ToList();
+		}
+	}
 }

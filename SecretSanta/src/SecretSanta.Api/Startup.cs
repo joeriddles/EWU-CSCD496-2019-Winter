@@ -27,6 +27,8 @@ namespace SecretSanta.Api
 
 			services.AddScoped<IGiftService, GiftService>();
 			services.AddScoped<IUserService, UserService>();
+			services.AddScoped<IGroupService, GroupService>();
+			services.AddScoped<IGroupUserService, GroupUserService>();
 
 			var connection = new SqliteConnection("DataSource=:memory:");
 			connection.Open();

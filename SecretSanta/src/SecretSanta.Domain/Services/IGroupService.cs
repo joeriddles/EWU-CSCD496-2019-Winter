@@ -3,10 +3,13 @@ using SecretSanta.Domain.Models;
 
 namespace SecretSanta.Domain.Services
 {
-	interface IGroupService
+	public interface IGroupService
 	{
+		Group GetGroup(int groupId);
 		Group AddGroup(Group group);
 		Group UpdateGroup(Group group);
-		List<Group> FetchAll();
+		void RemoveGroup(Group group);
+
+		List<Group> GetAllGroups();
 	}
 }

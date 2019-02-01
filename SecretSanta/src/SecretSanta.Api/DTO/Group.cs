@@ -18,5 +18,15 @@ namespace SecretSanta.Api.DTO
 			Id = group.Id;
 			Name = group.Name;
 		}
+
+		public static Domain.Models.Group ToDomain(Group dtoGroup)
+		{
+			if (dtoGroup == null) throw new ArgumentNullException(nameof(dtoGroup));
+			return new Domain.Models.Group()
+			{
+				Id = dtoGroup.Id,
+				Name = dtoGroup.Name
+			};
+		}
 	}
 }
