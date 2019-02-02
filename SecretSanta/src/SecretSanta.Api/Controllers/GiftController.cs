@@ -36,11 +36,15 @@ namespace SecretSanta.Api.Controllers
 			if (gifts is null) return BadRequest("gifts is null.");
 			if (userId <= 0) return BadRequest("userId invalid.");
 
+			foreach (var g in gifts)
+			{
+				var domainGift = Gift.ToDomain(g);
+				_giftService.AddGiftToUser(userId, domainGift);
+			}
+
 			return Created(
 				$"api/Gift/{userId}",
-				gifts.Select(gift =>
-					new Gift(_giftService.AddGiftToUser(userId, Gift.ToDomain(gift)))
-				).ToList()
+				gifts
 			);
 		}
 
