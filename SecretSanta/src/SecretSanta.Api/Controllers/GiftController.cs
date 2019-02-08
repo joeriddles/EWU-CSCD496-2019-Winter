@@ -40,7 +40,6 @@ namespace SecretSanta.Api.Controllers
             }
             List<Gift> databaseUsers = GiftService.GetGiftsForUser(userId);
 
-            // return databaseUsers.Select(GiftViewModel.ToViewModel).ToList();
             return Ok(Mapper.Map<List<GiftViewModel>>(databaseUsers));
         }
     }
