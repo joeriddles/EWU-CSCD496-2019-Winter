@@ -14,7 +14,7 @@ namespace SecretSanta.Api.Tests
         }
         public User AddUser(User user)
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public bool DeleteUser(int userId)

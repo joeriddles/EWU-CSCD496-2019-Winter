@@ -1,10 +1,4 @@
-﻿using SecretSanta.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace SecretSanta.Api.ViewModels
+﻿namespace SecretSanta.Api.ViewModels
 {
     public class GiftViewModel
     {
@@ -17,38 +11,6 @@ namespace SecretSanta.Api.ViewModels
         public GiftViewModel()
         {
 
-        }
-
-        public static GiftViewModel ToViewModel(Gift gift)
-        {
-            if (gift == null) throw new ArgumentNullException(nameof(gift));
-
-            var result = new GiftViewModel
-            {
-                Id = gift.Id,
-                Title = gift.Title,
-                Description = gift.Description,
-                OrderOfImportance = gift.OrderOfImportance,
-                Url = gift.Url,
-            };
-
-            return result;
-        }
-
-        public static Gift ToModel(GiftViewModel viewModel)
-        {
-            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
-
-            var result = new Gift
-            {
-                Id = viewModel.Id,
-                Title = viewModel.Title,
-                Description = viewModel.Description,
-                OrderOfImportance = viewModel.OrderOfImportance,
-                Url = viewModel.Url,
-            };
-
-            return result;
         }
     }
 }

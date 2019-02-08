@@ -11,12 +11,13 @@ namespace SecretSanta.Domain.Models
         public DbSet<Pairing> Pairings { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-            Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<GroupUser>().HasKey(gu => new { gu.UserId, gu.GroupId });
+
+            modelBuilder.Entity<Group>().HasIndex(g => g.Name).IsUnique();
 
             modelBuilder.Entity<GroupUser>()
                 .HasOne(gu => gu.User)
