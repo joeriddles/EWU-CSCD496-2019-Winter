@@ -30,7 +30,7 @@ namespace SecretSanta.Api.Controllers
         [Produces(typeof(ICollection<UserViewModel>))]
         public IActionResult Get()
         {
-            return Ok(UserService.FetchAll().Select(x => Mapper.Map<UserViewModel>(x)));
+            return Ok(UserService.FetchAll().Result.Select(x => Mapper.Map<UserViewModel>(x)));
         }
 
         [HttpGet("{id}")]
@@ -76,7 +76,7 @@ namespace SecretSanta.Api.Controllers
             }
 
             Mapper.Map(viewModel, fetchedUser);
-            UserService.UpdateUser(fetchedUser);
+            UserService.UpdateUser(fetchedUser.Result);
             return NoContent();
         }
 
@@ -89,7 +89,7 @@ namespace SecretSanta.Api.Controllers
                 return BadRequest("A User id must be specified");
             }
 
-            if (UserService.DeleteUser(id))
+            if (UserService.DeleteUser(id).Result)
             {
                 return Ok();
             }

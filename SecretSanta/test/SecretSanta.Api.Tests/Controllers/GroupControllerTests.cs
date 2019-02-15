@@ -32,7 +32,7 @@ namespace SecretSanta.Api.Tests.Controllers
 
             var service = new Mock<IGroupService>();
             service.Setup(x => x.FetchAll())
-                .Returns(new List<Group> { group1, group2 })
+                .ReturnsAsync(new List<Group> { group1, group2 })
                 .Verifiable();
 
 
@@ -69,7 +69,7 @@ namespace SecretSanta.Api.Tests.Controllers
             };
             var service = new Mock<IGroupService>();
             service.Setup(x => x.AddGroup(It.Is<Group>(g => g.Name == group.Name)))
-                .Returns(new Group
+                .ReturnsAsync(new Group
                 {
                     Id = 2,
                     Name = group.Name
@@ -108,7 +108,7 @@ namespace SecretSanta.Api.Tests.Controllers
             };
             var service = new Mock<IGroupService>();
             service.Setup(x => x.GetById(2))
-                .Returns(new Group
+                .ReturnsAsync(new Group
                 {
                     Id = 2,
                     Name = group.Name
@@ -141,7 +141,7 @@ namespace SecretSanta.Api.Tests.Controllers
         {
             var service = new Mock<IGroupService>();
             service.Setup(x => x.DeleteGroup(2))
-                .Returns(false)
+                .ReturnsAsync(false)
                 .Verifiable();
             var controller = new GroupsController(service.Object, Mapper.Instance);
 
@@ -156,7 +156,7 @@ namespace SecretSanta.Api.Tests.Controllers
         {
             var service = new Mock<IGroupService>();
             service.Setup(x => x.DeleteGroup(2))
-                .Returns(true)
+                .ReturnsAsync(true)
                 .Verifiable();
             var controller = new GroupsController(service.Object, Mapper.Instance);
 

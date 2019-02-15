@@ -33,7 +33,7 @@ namespace SecretSanta.Api.Controllers
             {
                 return NotFound();
             }
-            List<Gift> databaseUsers = GiftService.GetGiftsForUser(userId);
+            List<Gift> databaseUsers = GiftService.GetGiftsForUser(userId).Result;
 
             return Ok(databaseUsers.Select(x => Mapper.Map<GiftViewModel>(x)).ToList());
         }

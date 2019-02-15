@@ -21,7 +21,7 @@ namespace SecretSanta.Domain.Tests.Services
                     LastName = "Montoya"
                 };
 
-                user = userService.AddUser(user);
+                user = userService.AddUser(user).Result;
 
                 var gift = new Gift
                 {
@@ -49,7 +49,7 @@ namespace SecretSanta.Domain.Tests.Services
                     LastName = "Montoya"
                 };
 
-                user = userService.AddUser(user);
+                user = userService.AddUser(user).Result;
 
                 var gift = new Gift
                 {
@@ -68,12 +68,13 @@ namespace SecretSanta.Domain.Tests.Services
                 UserService userService = new UserService(context);
 
                 var users = userService.FetchAll();
-                var gifts = giftService.GetGiftsForUser(users[0].Id);
+                var gifts = giftService.GetGiftsForUser(users.Result[0].Id);
 
-                Assert.IsTrue(gifts.Count > 0);
+                Assert.IsTrue(gifts.Result.Count > 0);
 
-                gifts[0].Title = "Horse";
-                giftService.UpdateGiftForUser(users[0].Id, gifts[0]);                
+                gifts.Result[0].Title = "Horse";
+				// Assign result of UpdateGiftForUser(...).Result to variable to make sure it finishes before code continues
+				var wait = giftService.UpdateGiftForUser(users.Result[0].Id, gifts.Result[0]).Result;
             }
 
             using (var context = new ApplicationDbContext(Options))
@@ -82,10 +83,10 @@ namespace SecretSanta.Domain.Tests.Services
                 UserService userService = new UserService(context);
 
                 var users = userService.FetchAll();
-                var gifts = giftService.GetGiftsForUser(users[0].Id);
+                var gifts = giftService.GetGiftsForUser(users.Result[0].Id);
 
-                Assert.IsTrue(gifts.Count > 0);
-                Assert.AreEqual("Horse", gifts[0].Title);            
+                Assert.IsTrue(gifts.Result.Count > 0);
+                Assert.AreEqual("Horse", gifts.Result[0].Title);            
             }
         }
     }

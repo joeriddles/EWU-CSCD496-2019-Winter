@@ -30,7 +30,7 @@ namespace SecretSanta.Api.Controllers
         [Produces(typeof(ICollection<GroupViewModel>))]
         public IActionResult Get()
         {
-            return Ok(GroupService.FetchAll().Select(x => Mapper.Map<GroupViewModel>(x)));
+            return Ok(GroupService.FetchAll().Result.Select(x => Mapper.Map<GroupViewModel>(x)));
         }
 
         [HttpGet("{id}")]
@@ -74,7 +74,7 @@ namespace SecretSanta.Api.Controllers
             }
 
             Mapper.Map(viewModel, group);
-            GroupService.UpdateGroup(group);
+            GroupService.UpdateGroup(group.Result);
 
             return NoContent();
         }
@@ -88,7 +88,7 @@ namespace SecretSanta.Api.Controllers
                 return BadRequest("A group id must be specified");
             }
 
-            if (GroupService.DeleteGroup(id))
+            if (GroupService.DeleteGroup(id).Result)
             {
                 return Ok();
             }
