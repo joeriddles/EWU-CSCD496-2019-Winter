@@ -32,14 +32,6 @@ namespace SecretSanta.Web.Controllers
                     ViewBag.Users = JsonConvert.DeserializeObject<ICollection<UserViewModel>>(content);
                 }
             }
-
-			/*
-			 * using (...)
-			 * {
-			 *		
-			 * }
-			 */
-
             return View();
         }
 
