@@ -5,29 +5,26 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SecretSanta.Web.ViewModels;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace SecretSanta.Web.Controllers
 {
-    public class UsersController : Controller
+    public class GroupsController : Controller
     {
         private IHttpClientFactory ClientFactory { get; }
         private IMapper Mapper { get; }
         private ILogger Logger { get; }
-        public UsersController(IHttpClientFactory clientFactory, IMapper mapper, ILoggerFactory loggerFactory)
+        public GroupsController(IHttpClientFactory clientFactory, IMapper mapper, ILoggerFactory loggerFactory)
         {
             ClientFactory = clientFactory;
             Mapper = mapper;
-            Logger = loggerFactory.CreateLogger("UsersController");
+            Logger = loggerFactory.CreateLogger("GroupsController");
         }
 
-        // GET: /<controller>/
         public async Task<IActionResult> Index()
         {
             using (var httpClient = ClientFactory.CreateClient("SecretSantaApi"))
             {
                 var apiClient = new ApiClient(httpClient.BaseAddress.ToString(), httpClient);
-                ViewBag.Users = await apiClient.GetAllUsersAsync();
+                ViewBag.Groups = await apiClient.GetGroupsAsync();
             }
             return View();
         }
@@ -39,7 +36,7 @@ namespace SecretSanta.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(UserInputViewModel viewModel)
+        public async Task<IActionResult> Add(GroupInputViewModel viewModel)
         {
             IActionResult result = View();
 
@@ -50,7 +47,7 @@ namespace SecretSanta.Web.Controllers
                     try
                     {
                         var apiClient = new ApiClient(httpClient.BaseAddress.ToString(), httpClient);
-                        await apiClient.CreateUserAsync(viewModel);
+                        await apiClient.CreateGroupAsync(viewModel);
 
                         result = RedirectToAction(nameof(Index));
                     }
@@ -67,25 +64,25 @@ namespace SecretSanta.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            UserViewModel fetchedUser = null;
+            GroupViewModel fetchedGroup = null;
             using (var httpClient = ClientFactory.CreateClient("SecretSantaApi"))
             {
                 try
                 {
                     var apiClient = new ApiClient(httpClient.BaseAddress.ToString(), httpClient);
-                    fetchedUser = await apiClient.GetUserAsync(id);
+                    fetchedGroup = await apiClient.GetGroupAsync(id);
                 }
                 catch (SwaggerException se)
                 {
                     ModelState.AddModelError("", se.Message);
                 }
 
-                return View(fetchedUser);
+                return View(fetchedGroup);
             }
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(UserViewModel viewModel)
+        public async Task<IActionResult> Edit(GroupViewModel viewModel)
         {
             IActionResult result = View();
 
@@ -96,7 +93,7 @@ namespace SecretSanta.Web.Controllers
                     try
                     {
                         var apiClient = new ApiClient(httpClient.BaseAddress.ToString(), httpClient);
-                        await apiClient.UpdateUserAsync(viewModel.Id, Mapper.Map<UserInputViewModel>(viewModel));
+                        await apiClient.UpdateGroupAsync(viewModel.Id, Mapper.Map<GroupInputViewModel>(viewModel));
 
                         result = RedirectToAction(nameof(Index));
                     }
@@ -118,7 +115,7 @@ namespace SecretSanta.Web.Controllers
                 try
                 {
                     var apiClient = new ApiClient(httpClient.BaseAddress.ToString(), httpClient);
-                    await apiClient.DeleteUserAsync(id);
+                    await apiClient.DeleteGroupAsync(id);
 
                     result = RedirectToAction(nameof(Index));
                 }
