@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace SecretSanta.Api.Tests.Controllers
 {
@@ -40,7 +41,7 @@ namespace SecretSanta.Api.Tests.Controllers
                     gift
                 }
             };
-            var controller = new GiftsController(testService, Mapper.Instance);
+            var controller = new GiftsController(testService, Mapper.Instance, new LoggerFactory());
 
             var result = (await controller.GetGiftsForUser(4)).Result as OkObjectResult;
 
@@ -57,7 +58,7 @@ namespace SecretSanta.Api.Tests.Controllers
         public async Task GetGiftForUser_RequiresPositiveUserId()
         {
             var testService = new TestableGiftService();
-            var controller = new GiftsController(testService, Mapper.Instance);
+            var controller = new GiftsController(testService, Mapper.Instance, new LoggerFactory());
 
             var result = await controller.GetGiftsForUser(-1);
 

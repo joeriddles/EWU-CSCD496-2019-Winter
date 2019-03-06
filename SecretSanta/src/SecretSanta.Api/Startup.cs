@@ -62,10 +62,12 @@ namespace SecretSanta.Api
                 lib.GetDefaultAssemblyNames(dependencyContext)
                     .Where(a => a.Name.Contains("SecretSanta")).Select(Assembly.Load)).ToArray();
             services.AddAutoMapper(assemblies);
-        }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+            services.AddSingleton(new LoggerFactory());
+		}
+
+		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {

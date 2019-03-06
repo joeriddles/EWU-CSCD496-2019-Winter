@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace SecretSanta.Api.Tests.Controllers
 {
@@ -37,7 +38,7 @@ namespace SecretSanta.Api.Tests.Controllers
                 .Verifiable();
 
 
-            var controller = new GroupsController(service.Object, Mapper.Instance);
+            var controller = new GroupsController(service.Object, Mapper.Instance, new LoggerFactory());
 
             var result = (await controller.GetGroups()).Result as OkObjectResult;
 
@@ -53,7 +54,7 @@ namespace SecretSanta.Api.Tests.Controllers
         public async Task CreateGroup_RequiresGroup()
         {
             var service = new Mock<IGroupService>(MockBehavior.Strict);
-            var controller = new GroupsController(service.Object, Mapper.Instance);
+            var controller = new GroupsController(service.Object, Mapper.Instance, new LoggerFactory());
 
             var result = (await controller.CreateGroup(null)).Result as BadRequestResult;
 
@@ -76,7 +77,7 @@ namespace SecretSanta.Api.Tests.Controllers
                 }))
                 .Verifiable();
 
-            var controller = new GroupsController(service.Object, Mapper.Instance);
+            var controller = new GroupsController(service.Object, Mapper.Instance, new LoggerFactory());
 
             var result = (await controller.CreateGroup(group)).Result as CreatedAtActionResult;
             var resultValue = result.Value as GroupViewModel;
@@ -91,7 +92,7 @@ namespace SecretSanta.Api.Tests.Controllers
         public async Task UpdateGroup_RequiresGroup()
         {
             var service = new Mock<IGroupService>(MockBehavior.Strict);
-            var controller = new GroupsController(service.Object, Mapper.Instance);
+            var controller = new GroupsController(service.Object, Mapper.Instance, new LoggerFactory());
 
 
             var result = (await controller.UpdateGroup(1, null)) as BadRequestResult;
@@ -115,7 +116,7 @@ namespace SecretSanta.Api.Tests.Controllers
                 }))
                 .Verifiable();
 
-            var controller = new GroupsController(service.Object, Mapper.Instance);
+            var controller = new GroupsController(service.Object, Mapper.Instance, new LoggerFactory());
 
             var result = (await controller.UpdateGroup(2, group)) as NoContentResult;
 
@@ -129,7 +130,7 @@ namespace SecretSanta.Api.Tests.Controllers
         public async Task DeleteGroup_RequiresPositiveId(int groupId)
         {
             var service = new Mock<IGroupService>(MockBehavior.Strict);
-            var controller = new GroupsController(service.Object, Mapper.Instance);
+            var controller = new GroupsController(service.Object, Mapper.Instance, new LoggerFactory());
 
             var result = await controller.DeleteGroup(groupId);
 
@@ -143,7 +144,7 @@ namespace SecretSanta.Api.Tests.Controllers
             service.Setup(x => x.DeleteGroup(2))
                 .Returns(Task.FromResult(false))
                 .Verifiable();
-            var controller = new GroupsController(service.Object, Mapper.Instance);
+            var controller = new GroupsController(service.Object, Mapper.Instance, new LoggerFactory());
 
             var result = await controller.DeleteGroup(2);
 
@@ -158,7 +159,7 @@ namespace SecretSanta.Api.Tests.Controllers
             service.Setup(x => x.DeleteGroup(2))
                 .Returns(Task.FromResult(true))
                 .Verifiable();
-            var controller = new GroupsController(service.Object, Mapper.Instance);
+            var controller = new GroupsController(service.Object, Mapper.Instance, new LoggerFactory());
 
             var result = await controller.DeleteGroup(2);
 
